@@ -1,0 +1,89 @@
+CREATE DATABASE IF NOT EXISTS itqnet;
+
+USE itqnet;
+
+CREATE TABLE IF NOT EXISTS roles(
+    ID_Rol INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Rol),
+    rol VARCHAR(45) NOT NULL,
+    logico TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS permisos(
+    ID_Permiso INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Permiso),
+    permiso VARCHAR(20) NOT NULL,
+    descripcion VARCHAR(50) NOT NULL,
+    logico TINYINT(1) DEFAULT 1
+);
+
+/* RELACION PERMISOS Y ROLES */
+CREATE TABLE IF NOT EXISTS roles_permisos(
+    ID_Rol_Permiso INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Rol_Permiso),
+    Id_RolFK INT NOT NULL,
+    Id_PermisoFK INT NOT NULL,
+    logico TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(Id_RolFK) REFERENCES roles(ID_Rol),
+    FOREIGN KEY(Id_PermisoFK) REFERENCES permisos(ID_Permiso)
+);
+
+CREATE TABLE IF NOT EXISTS usuarios(
+    ID_Usuario INT NOT NULL, PRIMARY KEY(ID_Usuario),
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    logico TINYINT(1) DEFAULT 1  
+);
+
+/* RELACION ENTRE USUARIO Y ROL */
+CREATE TABLE IF NOT EXISTS rol_usuario(
+    ID_Rol_Usuario INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Rol_Usuario),
+    Id_RolFK INT NOT NULL,
+    ID_Usuario INT NOT NULL,
+    logico TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(Id_RolFK) REFERENCES roles(ID_Rol),
+    FOREIGN KEY(ID_Usuario) REFERENCES usuarios(ID_Usuario)
+);
+
+CREATE TABLE IF NOT EXISTS logeo(
+    ID_Login INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Login),
+    user VARCHAR(45) NOT NULL,
+    pwd VARCHAR(45) NOT NULL,
+    Id_UsuarioFK INT NOT NULL,
+    logico TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(Id_UsuarioFK) REFERENCES usuarios(ID_Usuario)
+);
+
+CREATE TABLE IF NOT EXISTS precios(
+    ID_Precio INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Precio),
+    precio VARCHAR(5) DEFAULT '$0.00',
+    logico TINYINT(1) DEFAULT 1
+);
+
+INSERT INTO precios (precio) VALUES ('$0.00');
+
+CREATE TABLE IF NOT EXISTS velocidades(
+    ID_Velocidad INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Velocidad),
+    velocidad VARCHAR(10) DEFAULT '0 mb/s',
+    logico TINYINT(1) DEFAULT 1
+);
+
+INSERT INTO velocidades (velocidad) VALUES ('0 mb/s');
+
+CREATE TABLE IF NOT EXISTS plan(
+    ID_Plan INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Plan),
+    nombre VARCHAR(45) NOT NULL,
+    Id_Velocidad_SFK INT DEFAULT 1,
+    Id_Velocidad_BFK INT DEFAULT 1,
+    Id_PrecioFK INT DEFAULT 1,
+    FOREIGN KEY(Id_Velocidad_SFK) REFERENCES velocidades(ID_Velocidad),
+    FOREIGN KEY(Id_Velocidad_BFK) REFERENCES velocidades(ID_Velocidad),
+    FOREIGN KEY(Id_PrecioFK) REFERENCES precios(ID_Precio) 
+);
+
+CREATE TABLE IF NOT EXISTS carrito(
+    ID_Carrito INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(ID_Carrito),
+    Id_UsuarioFK INT NOT NULL,
+    Id_PlanFK INT NOT NULL,
+    monto VARCHAR(6) DEFAULT '$0.00',
+    logico TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(Id_UsuarioFK) REFERENCES usuarios(ID_Usuario),
+    FOREIGN KEY(Id_PlanFK) REFERENCES plan(ID_Plan)
+);
