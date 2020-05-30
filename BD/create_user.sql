@@ -1,0 +1,1 @@
+CREATE USER 'soa'@'localhost' IDENTIFIED BY '#W3b_S04!asd';
