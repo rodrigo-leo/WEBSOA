@@ -1,3 +1,14 @@
 En ./Funciones/server/servidor.php declare un servidor nusoap por si lo quieres usar.
 la intencion es que en Funciones hagamos un archivo por funcion, uno para el login, otro para registros y asi
 tons cada funcion de esas hay que declararle el cliente de soap.
+
+para el uso de la conexion a la BD hay una clase en Funciones/conexion.php y para usarla:
+    require "./conexion.php"; <- importa ese archivo
+
+    $conexion = new Conexion(); <- crea la instancia a la conexion
+
+    $query = "select * from precios"; <- tu query
+
+    $accion = $conexion->execute($query); <- ejectuta el query
+
+si quieres utilizar de otro modo no hay bronca
