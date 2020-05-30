@@ -1,0 +1,3 @@
+En ./Funciones/server/servidor.php declare un servidor nusoap por si lo quieres usar.
+la intencion es que en Funciones hagamos un archivo por funcion, uno para el login, otro para registros y asi
+tons cada funcion de esas hay que declararle el cliente de soap.
