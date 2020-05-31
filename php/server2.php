@@ -10,9 +10,9 @@ require_once("../nusoap/lib/nusoap.php"); //path soap
 $usuario = "root";
 $contraseña = "";
 $servidor = "localhost";
-$basededatos = "datos_productos";
+$basededatos = "servicios";
 $tabla_Clientes = "cliente";
-$tabla_Productos = "producto";
+$tabla_Productos = "servicio";
 
 //services
 /*
@@ -32,11 +32,12 @@ $miURL);
 
 function comprobar_Intervalo_De_Longitud($entrada,$longitud_min,$longitud_max){
     $long_Palabra = strlen($entrada);
-    if($long_Palabra >= $longitud_min && $long_Palabra <= $longitud_max)
+    if($long_Palabra >= $longitud_min and $long_Palabra <= $longitud_max)
         return new soapval('return','xsd:boolean',true);
     else
         return new soapval('return','xsd:boolean',false);
 }
+
 /*
 comprobar_Palabras_Identicas
     parametros: string, string
@@ -207,7 +208,7 @@ function registrar_Cliente($nombre,$correo,$clave,$numero_Tel){
             return new soapval('return', 'xsd:int',$estado_registro);
         }
     }
-    $cliente_Datos_Insertar = "insert into ".$GLOBALS['tabla_Clientes']." values ('0','$nombre','$correo','$clave','$numero_Tel')";
+    $cliente_Datos_Insertar = "insert into ".$GLOBALS['tabla_Clientes']." values ('0','$nombre','$correo','$clave','$numero_Tel','disponible')";
     $registro = mysqli_query($link,$cliente_Datos_Insertar);
     $estado_registro = 1;
     mysqli_Close($link);

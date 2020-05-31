@@ -11,6 +11,7 @@
     $pass2 = htmlentities($_POST['pass2']);
     $correo = htmlentities($_POST['correo']);
     $telefono = htmlentities($_POST['telefono']);
+    $estado_usuario = 'disponible';
     static $longitud_min_contraseña = 6; //longitud mínima de caracteres que la contraseña debe de tener
     static $longitud_max_contraseña = 16; //longitud máxima de caracteres que la contraseña puede tener
     static $longitud_min_user_name = 5;//
@@ -78,7 +79,6 @@
         echo '<br>La contraseña debe contener almenos una letra mayúscula';
     }
 
-    
     $estado_Contra = $cliente->call(
         "comprobar_Caracter_Especial",
         array('entrada' => $pass1),
@@ -138,7 +138,7 @@
         echo "-".$registro_Cliente."-";
         switch($registro_Cliente){
             case 1:
-                header('location: http://localhost/dashboard/001proyecto/Inicio.html');
+                header('location: http://localhost/dashboard/itqNet/html/Inicio.html');
             break;
             case -1:
                 echo "El nombre de usuario ya se encuentra ocupado";
