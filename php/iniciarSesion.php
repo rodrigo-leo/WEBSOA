@@ -95,7 +95,7 @@
         echo "-".$registro_Cliente."-";
         switch($registro_Cliente){
             case 1:
-                header('location: http://localhost/dashboard/001proyecto/Inicio.html');
+                header('location: http://localhost/dashboard/itqNet/html/Inicio.html');
             break;
             case -1:
                 echo "El nombre de usuario o la contraseña es incorrecta";
