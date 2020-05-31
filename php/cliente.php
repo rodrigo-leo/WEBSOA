@@ -138,7 +138,7 @@
         echo "-".$registro_Cliente."-";
         switch($registro_Cliente){
             case 1:
-                header('location: http://localhost/dashboard/itqNet/html/Inicio.html');
+                header('location: http://localhost/dashboard/itqNet/html/Inicio.php');
             break;
             case -1:
                 echo "El nombre de usuario ya se encuentra ocupado";
