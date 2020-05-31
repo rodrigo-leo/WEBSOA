@@ -1,7 +1,8 @@
 <?php
     require_once("nusoap/lib/nusoap.php");
 
-    $serverURL = 'http://localhost/dashboard/server2.php';
+    $serverURL = 'http://localhost/dashboard/itqNet/php/server2.php';
+
     $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
     $estado_formulario = true;
 

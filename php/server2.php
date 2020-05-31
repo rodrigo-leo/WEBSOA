@@ -1,7 +1,7 @@
 <?php
 require_once("nusoap/lib/nusoap.php"); //path soap
 
- $miURL = "http://localhost/dashboard/server2.php";
+ $miURL = 'http://localhost/dashboard/itqNet/php/server2.php';
  $server = new soap_server();
  $server->configureWSDL("WSDLTST", $miURL);
  $server->wsdl->schemaTargetNamespace=$miURL;
