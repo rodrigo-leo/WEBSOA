@@ -11,9 +11,8 @@
     $pass1 = htmlentities($_POST['pass1']);
     static $longitud_min_contraseña = 6; //longitud mínima de caracteres que la contraseña debe de tener
     static $longitud_max_contraseña = 16; //longitud máxima de caracteres que la contraseña puede tener
-    static $longitud_min_user_name = 5;//
+    static $longitud_min_user_name = 4;//
     static $longitud_max_user_name = 20;//
-
 
     $estado_Nombre_Usuario = $cliente->call(
         "comprobar_Vacio",

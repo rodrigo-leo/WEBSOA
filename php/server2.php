@@ -11,7 +11,7 @@ $usuario = "root";
 $contraseña = "";
 $servidor = "localhost";
 $basededatos = "servicios";
-$tabla_Clientes = "cliente";
+$tabla_Clientes = "cliente"; 
 $tabla_Productos = "servicio";
 
 //services
