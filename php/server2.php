@@ -1,5 +1,5 @@
 <?php
-require_once("nusoap/lib/nusoap.php"); //path soap
+require_once("../nusoap/lib/nusoap.php"); //path soap
 
  $miURL = 'http://localhost/dashboard/itqNet/php/server2.php';
  $server = new soap_server();

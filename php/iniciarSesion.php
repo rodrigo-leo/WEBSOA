@@ -1,5 +1,5 @@
 <?php
-    require_once("nusoap/lib/nusoap.php");
+    require_once("../nusoap/lib/nusoap.php");
 
     $serverURL = 'http://localhost/dashboard/itqNet/php/server2.php';
 
