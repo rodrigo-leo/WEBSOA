@@ -165,14 +165,11 @@
     if($estado_imagen){
         $ruta_nuevo_destino = $GLOBALS['ruta_Indexphp'].'/resources/imagenes/'.$GLOBALS['nombre_img'];
         if( move_uploaded_file ($GLOBALS['imagen_tpm_name'], $ruta_nuevo_destino ) ) {
-            echo 'Fichero guardado con éxito <br/>';
+            //echo 'Fichero guardado con éxito <br/>';
         }
-        echo $ruta_nuevo_destino.'<br>'; 
     }
 
     if($estado_Peticion){
-        echo 'imagen_Dir = '.$ruta_nuevo_destino.'<br>'; 
-        echo 'nombre_Img = '.$nombre_img.'<br>'; 
         $producto_Abilitado = $cliente->call(
             'habilitar_Producto',
             array('codigo' => $codigo,'nombre' => $nombre,'precio' => $precio, 'detalles' => $detalles, 'imagen_Dir' => $ruta_nuevo_destino),

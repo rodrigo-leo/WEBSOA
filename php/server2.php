@@ -247,8 +247,10 @@ function registrar_Cliente($nombre,$correo,$clave,$numero_Tel){
         }
     }
     $cliente_Datos_Insertar = "insert into ".$GLOBALS['tabla_Clientes']." values ('0','$nombre','$correo','$clave','$numero_Tel','disponible')";
-    $registro = mysqli_query($link,$cliente_Datos_Insertar);
-    $estado_registro = 1;
+    if($registro = mysqli_query($link,$cliente_Datos_Insertar)){
+        $estado_registro = 1;
+        return new soapval('return', 'xsd:int',$estado_registro);
+    }
     mysqli_Close($link);
     return new soapval('return', 'xsd:int',$estado_registro);
 }
@@ -345,13 +347,13 @@ function eliminar_Producto($codigo){
     $estado_peticion = -2;
     $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
     mysqli_select_db($link,$GLOBALS['basededatos']);
-    $confirmar_Existencias = "select codigo from servicios where codigo = '$codigo'";
+    $confirmar_Existencias = "select codigo from ".$GLOBALS['tabla_Servicios']." where codigo = '$codigo'";
     $registro = mysqli_query($link,$confirmar_Existencias);
     $varRow = mysqli_fetch_array($registro);
     if(is_array($varRow)){
         foreach($varRow as $codigo_Valor){
             if($codigo_Valor == $codigo){
-                $desabilitar_Producto = "SELECT estado FROM `servicios` WHERE codigo = '$codigo'";
+                $desabilitar_Producto = "SELECT estado FROM ".$GLOBALS['tabla_Servicios']." WHERE codigo = '$codigo'";
                 $confirmar_Estado = mysqli_query($link,$desabilitar_Producto);
                 $varRow = mysqli_fetch_array($confirmar_Estado);
                 if($varRow[0] == 'no disponible'){
@@ -360,7 +362,7 @@ function eliminar_Producto($codigo){
                 }
                 elseif($varRow[0] =='disponible'){
 
-                    $desabilitar_Producto = "UPDATE servicios SET estado = 'no disponible' WHERE codigo = '$codigo'";
+                    $desabilitar_Producto = "UPDATE ".$GLOBALS['tabla_Servicios']." SET estado = 'no disponible' WHERE codigo = '$codigo'";
                     $registro = mysqli_query($link,$desabilitar_Producto);
                     if($registro){
                         $estado_registro = 1;
