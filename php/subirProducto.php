@@ -12,6 +12,8 @@
     $nombre_img = $_FILES['imagen']['name'];
     $tipo = $_FILES['imagen']['type'];
     $tamano = $_FILES['imagen']['size'];
+    $imagen_tpm_name = $_FILES['imagen']['tmp_name'];
+    
 
 
     static $longitud_Codigo = 6;
@@ -21,6 +23,10 @@
     static $longitud_Max_Precio = 12;
     Static $estado_Producto = "disponible";
     Static $tamaño_Max_Imagen = 10;//10MB
+
+    
+    //direcciones
+    $ruta_Indexphp = 'C:/xampp/htdocs/dashboard/itqNet';
 
     //codigo del producto
     $estado_Codigo = $cliente->call(
@@ -90,7 +96,7 @@
         array('entrada' => $precio, 'longitud_min' => $longitud_Min_Precio, 'longitud_max' => $longitud_Max_Precio),
         "uri:$serverURL"
     );
-    if($estado_Nombre == false){
+    if($estado_Precio == false){
         $GLOBALS['estado_Peticion'] = false;
         echo "<br>el precio del producto es incorrecto";
     }
@@ -114,6 +120,7 @@
         $GLOBALS['estado_Peticion'] = false;
         echo "<br>El precio de ".$precio." No puede ser registrado al servicio que solicita";
     }
+
     //detalles del producto
     $estado_detalles = $cliente->call(
         "comprobar_Vacio",
@@ -122,7 +129,7 @@
     );
     if($estado_detalles == true){
         $GLOBALS['estado_Peticion'] = false;
-        echo "<br>La sección de detalles no puede estar vacio";
+        echo "<br>necesitas dar una descripción del producto";
     }
 
     //imagen
@@ -155,11 +162,20 @@
         $GLOBALS['estado_Peticion'] = false;
         echo "<br>La imagen ocupa".($tamano/(8*1024*1024))."MB, supera los ".$tamaño_Max_Imagen."MB establecidos";
     }
+    if($estado_imagen){
+        $ruta_nuevo_destino = $GLOBALS['ruta_Indexphp'].'/resources/imagenes/'.$GLOBALS['nombre_img'];
+        if( move_uploaded_file ($GLOBALS['imagen_tpm_name'], $ruta_nuevo_destino ) ) {
+            echo 'Fichero guardado con éxito <br/>';
+        }
+        echo $ruta_nuevo_destino.'<br>'; 
+    }
 
     if($estado_Peticion){
+        echo 'imagen_Dir = '.$ruta_nuevo_destino.'<br>'; 
+        echo 'nombre_Img = '.$nombre_img.'<br>'; 
         $producto_Abilitado = $cliente->call(
             'habilitar_Producto',
-            array('codigo' => $codigo,'nombre' => $nombre,'precio' => $precio, 'detalles' => $detalles, ),
+            array('codigo' => $codigo,'nombre' => $nombre,'precio' => $precio, 'detalles' => $detalles, 'imagen_Dir' => $ruta_nuevo_destino),
             "uri:$serverURL"
         );
         //echo $cliente;
@@ -176,6 +192,8 @@
             case -2:
                 echo 'el producto existe en el registro, pero no puede ser dado';
             break;
+            case -3:
+                echo 'error al tratar de realizar la inserción de los datos a la base de datos';
             default:
                 echo 'No se pudo realizar el registro del producto';
         }

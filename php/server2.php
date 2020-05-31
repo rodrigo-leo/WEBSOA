@@ -6,13 +6,18 @@ require_once("../nusoap/lib/nusoap.php"); //path soap
  $server->configureWSDL("WSDLTST", $miURL);
  $server->wsdl->schemaTargetNamespace=$miURL;
 
+ //direcciones
+ $ruta_Indexphp = 'C:/xampp/htdocs/dashboard/itqNet';
+
+
 //BD
 $usuario = "root";
 $contraseña = "";
 $servidor = "localhost";
 $basededatos = "servicios";
 $tabla_Clientes = "cliente"; 
-$tabla_Productos = "servicio";
+$tabla_Servicios = "servicio";
+$tabla_Carrito = "carrito";
 
 //services
 /*
@@ -249,25 +254,25 @@ function registrar_Cliente($nombre,$correo,$clave,$numero_Tel){
 }
 
 $server->register('habilitar_Producto',
-    array('codigo' => 'xsd:string', 'nombre' => 'xsd:string', 'precio' => 'xsd:string'),
+    array('codigo' => 'xsd:int', 'nombre' => 'xsd:string', 'precio' => 'xsd:string', 'detalles' => 'xsd:string', 'imagen_Dir' => 'xsd:string'),
     array('return' => 'xsd:int'),
     $miURL);
 
-function habilitar_Producto($codigo,$nombre,$precio){
+function habilitar_Producto($codigo,$nombre,$precio,$detalles,$imagen_Dir){
     $estado_registro = 0;
     $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
     mysqli_select_db($link,$GLOBALS['basededatos']);
-    $confirmar_Existencias = "select codigo from producto where codigo = '$codigo'";
+    $confirmar_Existencias = "select codigo from servicio where codigo = '$codigo'";
     $registro = mysqli_query($link,$confirmar_Existencias);
     $varRow = mysqli_fetch_array($registro);
     if(is_array($varRow)){
         foreach($varRow as $codigo_Valor){
             if($codigo_Valor == $codigo){
-                $habilitar_Producto = "SELECT estado FROM `producto` WHERE codigo = '$codigo'";
+                $habilitar_Producto = "SELECT estado FROM servicio WHERE codigo = '$codigo'";
                 $confirmar_Estado = mysqli_query($link,$habilitar_Producto);
                 $varRow = mysqli_fetch_array($confirmar_Estado);
                 if($varRow[0] == 'no disponible'){
-                    $habilitar_Producto = "UPDATE producto SET estado = 'disponible' WHERE codigo = '$codigo'";
+                    $habilitar_Producto = "UPDATE servicio SET estado = 'disponible' WHERE codigo = '$codigo'";
                     $registro = mysqli_query($link,$habilitar_Producto);
                     if($registro){
                         $estado_registro = 1;
@@ -285,8 +290,8 @@ function habilitar_Producto($codigo,$nombre,$precio){
             }
         }
     }
-    $cliente_Datos_Insertar = "insert into `producto` values ('0','$codigo','$nombre','$precio','disponible')";
-    if($registro = mysqli_query($link,$cliente_Datos_Insertar)){
+    $cliente_Datos_Insertar = "INSERT into ".$GLOBALS['tabla_Servicios']." values ('0','$codigo','$nombre','$precio','disponible','$detalles','$imagen_Dir')";
+    if(mysqli_query($link,$cliente_Datos_Insertar)){
         $estado_registro = 2;
         return new soapval('return', 'xsd:int',$estado_registro);
     }
@@ -340,13 +345,13 @@ function eliminar_Producto($codigo){
     $estado_peticion = -2;
     $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
     mysqli_select_db($link,$GLOBALS['basededatos']);
-    $confirmar_Existencias = "select codigo from producto where codigo = '$codigo'";
+    $confirmar_Existencias = "select codigo from servicios where codigo = '$codigo'";
     $registro = mysqli_query($link,$confirmar_Existencias);
     $varRow = mysqli_fetch_array($registro);
     if(is_array($varRow)){
         foreach($varRow as $codigo_Valor){
             if($codigo_Valor == $codigo){
-                $desabilitar_Producto = "SELECT estado FROM `producto` WHERE codigo = '$codigo'";
+                $desabilitar_Producto = "SELECT estado FROM `servicios` WHERE codigo = '$codigo'";
                 $confirmar_Estado = mysqli_query($link,$desabilitar_Producto);
                 $varRow = mysqli_fetch_array($confirmar_Estado);
                 if($varRow[0] == 'no disponible'){
@@ -355,7 +360,7 @@ function eliminar_Producto($codigo){
                 }
                 elseif($varRow[0] =='disponible'){
 
-                    $desabilitar_Producto = "UPDATE producto SET estado = 'no disponible' WHERE codigo = '$codigo'";
+                    $desabilitar_Producto = "UPDATE servicios SET estado = 'no disponible' WHERE codigo = '$codigo'";
                     $registro = mysqli_query($link,$desabilitar_Producto);
                     if($registro){
                         $estado_registro = 1;
