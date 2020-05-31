@@ -38,6 +38,18 @@ function comprobar_Intervalo_De_Longitud($entrada,$longitud_min,$longitud_max){
         return new soapval('return','xsd:boolean',false);
 }
 
+$server->register('comprobar_Intervalo_De_Valor',//comprueba que un string sea mayor o igual a una longitud dada
+array('entrada' => 'xsd:int', 'longitud_min' => 'xsd:int', 'longitud_max' => 'xsd:int'),//string,longitud del string
+array('return' => 'xsd:boolean'),//parametros de salida
+$miURL);
+
+function comprobar_Intervalo_De_Valor($entrada,$longitud_min,$longitud_max){
+    if($entrada >= $longitud_min and $entrada <= $longitud_max)
+        return new soapval('return','xsd:boolean',true);
+    else
+        return new soapval('return','xsd:boolean',false);
+}
+
 /*
 comprobar_Palabras_Identicas
     parametros: string, string
@@ -180,6 +192,27 @@ function comprobar_Vacio($entrada){
     else
         return new soapval('return','xsd:boolean',false);
 }
+
+/*validar_Extencion_Imagen
+parametros: string
+return: boolean
+*/
+$server->register('validar_Extencion_Imagen',
+    array('entrada' => 'xsd:string'),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function validar_Extencion_Imagen($entrada){
+    if( $entrada === "image/jpg"
+    ||  $entrada === "image/png"
+    ||  $entrada === "image/jpeg"
+    ||  $entrada === $entrada
+    ||  $entrada === "image/gif")
+        return new soapval('return','xsd:boolean',true);
+    else
+        return new soapval('return','xsd:boolean',false);
+}
+
 
 $server->register('registrar_Cliente',
     array('nombre' => 'xsd:string', 'correo'=> 'xsd:string', 'clave'=> 'xsd:string', 'numero_Tel' => 'xsd:int'),
