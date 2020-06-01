@@ -27,5 +27,6 @@
 </nav>
 
 <?php
+  include "../php/catalogoUsuario.php";
   include "footer.php";
 ?>
