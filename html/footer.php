@@ -6,7 +6,7 @@
     <div class="container-fluid">
             <h5>Contacto</h5>
             <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            <button type="button" class="btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal">Correo</button>
 
             <!-- Modal -->
             <div id="myModal" class="modal fade" role="dialog">
@@ -49,7 +49,7 @@
 
                                                     <div class="form-group">
                                                         <div class="col-md-12 text-center">
-                                                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                                            <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
                                                         </div>
                                                     </div>
                                                 </fieldset>
