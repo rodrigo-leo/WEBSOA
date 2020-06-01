@@ -497,7 +497,7 @@ $server->register(
 function listaServicios(){
     $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
     mysqli_select_db($link,$GLOBALS['basededatos']);
-    $comprobar_Servicio =  "select * from servicio";
+    $comprobar_Servicio =  "select * from servicio where estado = 'disponible'";
     $registro = mysqli_query($link, $comprobar_Servicio);
     $rows = array();
     while($r = mysqli_fetch_assoc($registro)) {
