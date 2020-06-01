@@ -380,6 +380,87 @@ function eliminar_Producto($codigo){
     return new soapval('return', 'xsd:int',$estado_peticion);
 }
 
+/**
+ * SERVICIO: verificar usuario
+ * parametros: user
+ * respuesta: true / false
+ */
+$server->register(
+    'validarUser',
+    array('nombre' => 'xsd:string'),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function validarUser($nombre){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Cliente = "select nombre from cliente where nombre = '$nombre'";//comprobar que el nombre se usario no este registrado
+    $registro = mysqli_query($link,$comprobar_Cliente);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == $nombre){
+            return new soapval('return', 'xsd:boolean',true);
+        }else{
+            return new soapval('return', 'xsd:boolean',false);
+        }
+    }
+}
+
+/**
+ * SERVICIO: verificar correo
+ * parametros: correo
+ * respuesta: true / false
+ */
+$server->register(
+    'validarCorreo',
+    array(
+        'nombre' => 'xsd:string',
+        'correo' => 'xsd:string'
+    ),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function validarCorreo($nombre, $correo){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Cliente = "select nombre, correo from cliente where nombre = '$nombre'";//comprobar que el nombre se usario no este registrado
+    $registro = mysqli_query($link,$comprobar_Cliente);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == $nombre && $varRow[1] == $correo){
+            return new soapval('return', 'xsd:boolean',true);
+        }else{
+            return new soapval('return', 'xsd:boolean',false);
+        }
+    }
+}
+
+/**
+ * requiere verificar si existe usuario y correo en la BD
+ * 
+ * SERVICIO: envio de correo
+ * parametros: emailTo, Asunto, Mensaje, Cabeceras
+ * respuesta: true or false
+ */
+$server->register(
+    'enviarCorreo',
+    array(
+        'to' => 'xsd:string',
+        'asunto' => 'xsd:string',
+        'mensaje' => 'xsd:string',
+        'headers' => 'xsd:string'
+    ),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function enviarCorreo($to, $asunto, $mensaje, $headers){
+    if(mail($to,$asunto,$mensaje,$headers)){
+        return new soapval('return', 'xsd:boolean',true);
+    }else{
+        return new soapval('return', 'xsd:boolean',false);
+    }
+}
+
 if(!isset($HTTP_RAW_POST_DATA)){
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }

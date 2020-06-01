@@ -29,10 +29,18 @@
 
                                                     <div class="form-group">
                                                         <div class="col-md-8">
-                                                            <label for="fTo">Para:*</label>
-                                                            <input id="fTo" name="fTo" type="email" placeholder="Para" class="form-control" required>
+                                                            <label for="fNombre">Nombre del usuario:*</label>
+                                                            <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" required>
                                                         </div>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-8">
+                                                            <label for="fEmail">Correo:*</label>
+                                                            <input type="email" name="fEmail" id="fEmail" placehorder="Corre electronico" class="form-control" required>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="form-group">
                                                         <div class="col-md-8">
                                                             <label for="fAsunto">Asunto:*</label>
