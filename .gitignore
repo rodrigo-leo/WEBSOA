@@ -2,3 +2,4 @@
 nusoap/lib/nusoap.php
 
 nusoap/lib/nusoap-antiguo.php
+*.php
