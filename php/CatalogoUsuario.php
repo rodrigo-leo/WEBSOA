@@ -31,14 +31,20 @@ $servicios = $cliente->call(
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $res = json_decode($servicios,true);
-                        if (is_array($res) || is_object($res))
-                        {
-                            foreach($res as $valor){
-                                echo $valor['nombre'];
+                        <?php
+                            $res = json_decode($servicios, true);
+                            if (is_array($res) || is_object($res))
+                            {
+                                foreach($res as $valor){
+                                    echo '<tr>';
+                                    echo '<td>'.$valor['nombre'].'</td>';
+                                    echo '<td>'.$valor['precio'].'</td>';
+                                    echo '<td>'.$valor['descripción'].'</td>';
+                                    echo '</tr>';
+                                }
+
                             }
-                        }
+                        
                     ?>
                 </tbody>
             </table>
