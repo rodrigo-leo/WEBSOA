@@ -20,7 +20,7 @@
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/BajaProducto.html"> Bajar Productos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/ListaProducto.html">Ver Productos</a>
+        <a class="nav-link" href="http://localhost/dashboard/itqNet/ADMIN/usuarios.php">Usuarios</a>
       </li>
     </ul>
   </div>
