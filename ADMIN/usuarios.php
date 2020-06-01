@@ -80,20 +80,20 @@ $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
         <fieldset>
             <div class="form-group">
                 <div class="col-md-8">  
-                    <label for="fID">ID:*</label>
-                    <input type="text" name="fID" id="fID" placeholder="Nombre" class="form-control" disabled>
+                    <label for="fNombre">ID:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" disabled>
                 </div>
                 <div class="col-md-8">  
                     <label for="fNombre">Nombre del usuario:*</label>
                     <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" disabled>
                 </div>
                 <div class="col-md-8">  
-                    <label for="fCorreo">Correo:*</label>
-                    <input type="text" name="fCorreo" id="fCorreo" placeholder="Correo" class="form-control" disabled>
+                    <label for="fNombre">Correo:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" disabled>
                 </div>
                 <div class="col-md-8">  
-                    <label for="fTel">Telefono:*</label>
-                    <input type="text" name="fTel" id="fTel" placeholder="Telefono" class="form-control" disabled>
+                    <label for="fNombre">Telefono:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" disabled>
                 </div>
             </div>
         </fieldset>
@@ -119,20 +119,20 @@ $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
         <fieldset>
             <div class="form-group">
                 <div class="col-md-8">  
-                    <label for="fID">ID:*</label>
-                    <input type="text" name="fID" id="fID" placeholder="ID" class="form-control" disabled>
+                    <label for="fNombre">ID:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" disabled>
                 </div>
                 <div class="col-md-8">  
                     <label for="fNombre">Nombre del usuario:*</label>
                     <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" require>
                 </div>
                 <div class="col-md-8">  
-                    <label for="fCorreo">Correo:*</label>
-                    <input type="text" name="fCorreo" id="fCorreo" placeholder="Correo" class="form-control" require>
+                    <label for="fNombre">Correo:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" require>
                 </div>
                 <div class="col-md-8">  
-                    <label for="fTel">Telefono:*</label>
-                    <input type="text" name="fTel" id="fTel" placeholder="Telefono" class="form-control" require>
+                    <label for="fNombre">Telefono:*</label>
+                    <input type="text" name="fNombre" id="fNombre" placeholder="Nombre" class="form-control" require>
                 </div>
             </div>
         </fieldset>
@@ -152,11 +152,10 @@ $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
         $('#verUsuario').modal('show');
     }
     function editar(){
-        echo 
         $('#editUser').modal('show');
     }
     function save(){
-
+        
     }
 </script>
 
