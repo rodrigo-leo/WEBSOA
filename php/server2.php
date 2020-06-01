@@ -461,6 +461,30 @@ function enviarCorreo($to, $asunto, $mensaje, $headers){
     }
 }
 
+/**
+ * SERVICIO: obtener admin user
+ */
+$server->register(
+    'Admin',
+    array('user' => 'xsd:string'),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function Admin($user){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_user = "select id_Cliente from cliente where nombre = '$user'";//comprobar que el nombre se usario no este registrado
+    $registro = mysqli_query($link,$comprobar_user);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == '1' || $varRow[0] == 1){
+            return new soapval('return', 'xsd:boolean',true);
+        }else{
+            return new soapval('return', 'xsd:boolean',false);
+        }
+    }
+}
+
 if(!isset($HTTP_RAW_POST_DATA)){
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }

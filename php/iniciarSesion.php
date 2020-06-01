@@ -94,7 +94,16 @@
         echo "-".$registro_Cliente."-";
         switch($registro_Cliente){
             case 1:
-                header('location: http://localhost/dashboard/itqNet/html/Inicio.php');
+                $admin = $cliente->call(
+                    'Admin',
+                    array('user' => $nombre_usuario),
+                    "uri:$serverURL"
+                );
+                if($admin == true){
+                    header('location: http://localhost/dashboard/itqNet/ADMIN/admin.php');
+                }else{
+                    header('location: http://localhost/dashboard/itqNet/html/Inicio.php');
+                }
             break;
             case -1:
                 echo "El nombre de usuario o la contraseña es incorrecta";
