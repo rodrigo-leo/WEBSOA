@@ -485,6 +485,29 @@ function Admin($user){
     }
 }
 
+/**
+ * SERVICIO: otener todos los usuarios
+ */
+$server->register(
+    'listaServicios',
+    array('servicio' => 'xsd:string'),
+    array('return' => 'xsd:string'),
+    $miURL
+);
+function listaServicios(){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Servicio =  "select * from servicio";
+    $registro = mysqli_query($link, $comprobar_Servicio);
+    $rows = array();
+    while($r = mysqli_fetch_assoc($registro)) {
+        $rows[] = $r;
+    }
+    $res = json_encode($rows);
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:string',$res);
+}
+
 if(!isset($HTTP_RAW_POST_DATA)){
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }
