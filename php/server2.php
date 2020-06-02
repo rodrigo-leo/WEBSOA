@@ -486,7 +486,7 @@ function Admin($user){
 }
 
 /**
- * SERVICIO: otener todos los usuarios
+ * SERVICIO: otener todos los servicios disponibles
  */
 $server->register(
     'listaServicios',
