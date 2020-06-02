@@ -17,6 +17,9 @@
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/AltaProducto.html"> Subir Productos</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/ActivarProducto.html"> Activar Productos</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/BajaProducto.html"> Bajar Productos</a>
       </li>
       <li class="nav-item">

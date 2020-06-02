@@ -508,6 +508,48 @@ function listaServicios(){
     return new soapval('return', 'xsd:string',$res);
 }
 
+$server->register(
+    'activarServicio',
+    array('codigo' => 'xsd:int'),
+    array('return' => 'xsd:int'),
+    $miURL
+);
+function activarServicio($codigo){
+    $estado_peticion = -2;
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $confirmar_Existencias = "select codigo from ".$GLOBALS['tabla_Servicios']." where codigo = '$codigo'";
+    $registro = mysqli_query($link,$confirmar_Existencias);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        foreach($varRow as $codigo_Valor){
+            if($codigo_Valor == $codigo){
+                $habilitar_Producto = "SELECT estado FROM servicio WHERE codigo = '$codigo'";
+                $confirmar_Estado = mysqli_query($link,$habilitar_Producto);
+                $varRow = mysqli_fetch_array($confirmar_Estado);
+                if($varRow[0] == 'no disponible'){
+                    $habilitar_Producto = "UPDATE servicio SET estado = 'disponible' WHERE codigo = '$codigo'";
+                    $registro = mysqli_query($link,$habilitar_Producto);
+                    if($registro){
+                        $estado_registro = 1;
+                        return new soapval('return', 'xsd:int',$estado_registro);
+                    }
+                }
+                elseif($varRow[0] =='disponible'){
+                    $estado_registro = -1;
+                    return new soapval('return', 'xsd:int',$estado_registro);
+                }
+                else{
+                    $estado_registro = -2;
+                    return new soapval('return', 'xsd:int',$estado_registro);
+                }
+            }
+        }
+    }
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:int',$estado_peticion);
+}
+
 if(!isset($HTTP_RAW_POST_DATA)){
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }

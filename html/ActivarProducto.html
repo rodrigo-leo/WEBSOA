@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<h5 class="modal-title">Alta productos</h5>
+<form action="../php/ActivarProducto.php" method ="POST">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+    <style>
+      div {
+        background-image: url('/img/fondo registro2.jpg');
+      }
+    </style>  
+    <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Codigo</label>
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">######</label>
+        <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="123456" name="codigo">
+      </div>
+    </div>
+    <div class="mx-auto" style="width: 200px;">
+      <div class="form-group row">
+          <button type="submit" class="btn btn-primary" value="enviar">Activar Servicio</button>
+      </div>
+    </div>
+  </div>
+  <div class="col"></div>
+</form>
