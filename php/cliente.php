@@ -11,12 +11,20 @@
     $pass2 = htmlentities($_POST['pass2']);
     $correo = htmlentities($_POST['correo']);
     $telefono = htmlentities($_POST['telefono']);
-    $estado_usuario = 'disponible';
+    $key = "6LdOS_8UAAAAAJQCv9-rn7vsqUM4gyzmYY9_0zHW";
+    $responseKey = $_POST['g-recaptcha-response'];//el valor que envia el recaptcha del formulario
+    $userIP = $_SERVER['REMOTE_ADDR'];
+    $urlGoogle = "https://www.google.com/recaptcha/api/siteverify?secret=$key&response=$responseKey&remoteip=$userIP";
+    $response = file_get_contents($urlGoogle);
+
+    echo $response;
+
     static $longitud_min_contraseña = 6; //longitud mínima de caracteres que la contraseña debe de tener
     static $longitud_max_contraseña = 16; //longitud máxima de caracteres que la contraseña puede tener
     static $longitud_min_user_name = 5;//
     static $longitud_max_user_name = 20;//
     static $longitud_numero_telefonico = 10;//
+    $estado_usuario = 'disponible';
 
 
     $estado_Nombre_Usuario = $cliente->call(
