@@ -1,58 +1,67 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>registro</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
 
-
-<h5 class="modal-title">Registro</h5>
-<form action="../php/cliente.php" method ="POST">
-  <div class="row">
+  <body>
+  <h5 class="modal-title">Registro</h5>
+  <form action="../php/cliente.php" method ="POST">
+    <div class="row">
+      <div class="col"></div>
+        <div class="col">
+        <style>
+          div {
+            background-image: url('/img/fondo registro2.jpg');
+          }
+          </style> 
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">User</label>
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="User name" name="user">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass1">
+            <small id="passwordHelpInline" class="text-muted">
+              Must be 6-16 characters long.
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">Password </label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Repeat your password" name="pass2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputAddress" placeholder="email@example.com" name="correo"
+            required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
+          <label for="example-tel-input" class="col-2 col-form-label">(+ 52)</label>
+          <div class="col-10">
+            <input class="form-control" type="tel" id="example-tel-input" name="telefono"
+            >
+          </div>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6Le8tP8UAAAAAAhMdIC3wJuTiRY_yJXZl5cUyZ8J"></div>
+        <div class="mx-auto" style="width: 200px;">
+          <div class="form-group row">
+              <button type="submit" class="btn btn-primary" value="enviar" name = "submit">Registrarce</button>
+          </div>
+        </div>
+      </div>
     <div class="col"></div>
-    <div class="col">
-    <style>
-      div {
-        background-image: url('/img/fondo registro2.jpg');
-      }
-      </style> 
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">User</label>
-      <div class="col-auto">
-        <label class="sr-only" for="inlineFormInput">Name</label>
-        <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="User name" name="user">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass1">
-        <small id="passwordHelpInline" class="text-muted">
-          Must be 6-16 characters long.
-        </small>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Password </label>
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword3" placeholder="Repeat your password" name="pass2">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputAddress" placeholder="email@example.com" name="correo"
-        required>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-      <label for="example-tel-input" class="col-2 col-form-label">(+ 52)</label>
-      <div class="col-10">
-        <input class="form-control" type="tel" id="example-tel-input" name="telefono"
-        >
-      </div>
-    </div>
-    <div class="mx-auto" style="width: 200px;">
-      <div class="form-group row">
-          <button type="submit" class="btn btn-primary" value="enviar">Sign in</button>
-      </div>
-    </div>
-  </div>
-  <div class="col"></div>
-</form>
+    </form>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+  </body>
+</html>

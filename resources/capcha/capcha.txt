@@ -1,0 +1,8 @@
+Se ha registrado "itqNet.com".
+
+Usa esta clave de sitio web en el código HTML que tu sitio web sirve a los usuarios.
+6Le8tP8UAAAAAAhMdIC3wJuTiRY_yJXZl5cUyZ8J
+
+
+Usa esta clave secreta para la comunicación entre tu sitio web y el servicio reCAPTCHA.
+6Le8tP8UAAAAAF7a8zcCBBFpnyd8Y9XCXd4MSxsU
