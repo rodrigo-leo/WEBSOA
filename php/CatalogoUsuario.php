@@ -1,57 +1,55 @@
 
 
+
+
 <?php
-require_once("../nusoap/lib/nusoap.php"); //path soap
+require_once("../nusoap/lib/nusoap.php");
 
-$miURL = 'http://localhost/dashboard/itqNet/php/server2.php';
-$server = new soap_server();
-$server->configureWSDL("WSDLTST", $miURL);
-$server->wsdl->schemaTargetNamespace=$miURL;
+$serverURL = 'http://localhost/dashboard/itqNet/php/server2.php';
+$cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
 
-//BD
-$usuario = "root";
-$contraseña = "";
-$servidor = "localhost";
-$basededatos = "servicios";
-$tabla_Clientes = "cliente"; 
-$tabla_Servicios = "servicio";
-$tabla_Carrito = "carrito";
-
-//SELECT COUNT (*) FROM empleados WHERE país= 'México'
-
-$link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
-mysqli_select_db($link,$GLOBALS['basededatos']);
+$servicios = $cliente->call(
+    "listaServicios",
+    array('servicio' => 'user'),
+    "uri:$serverURL"
+);
 ?>
 
-
-<html>
-    <br>
-    <div class="row row-cols-1 row-cols-md-3">
-    <?php
-        $confirmar_Existencias = "select * from ".$GLOBALS['tabla_Servicios']." where estado = 'disponible' order by precio";
-        $registro = mysqli_query($link,$confirmar_Existencias);
-        while($varRow = mysqli_fetch_array($registro)){
-            $imagen_Dir = str_replace("C:/xampp/htdocs/dashboard/itqNet","..",$varRow[6]);
-    ?>
-        <div class="card border-info mb-3">
-            <div class="card">
-                <img src= <?php echo $imagen_Dir?> class="card-img-top" alt="<?php echo $imagen_Dir?>">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $varRow[2]?></h5>
-                    <p class="card-text"><?php echo $varRow[5]?></p>
-                </div>
-            </div >
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">$<?php echo $varRow[3]?></li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="btn btn-info btn-lg">Adquirir</a>
-                <a href="#" class="btn btn-info btn-lg">Subir al carrito</a>
-            </div>
-        </div>
-    <?php
-        }
-    mysqli_Close($link);
-    ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../CSS/bootstrap.css">
+<script src="../JS/jquery.js"></script>
+<script src="../JS/bootstrap.js"></script>
+<div class="container-fluid">
+    <div class="text-center">
+        <h2>Paquetes de internet</h2>
     </div>
-</html>
+    <br>
+    <div>
+        <div>
+            <table class="table table-dark table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scooe="col">Nombre</th>
+                        <th scooe="col">precio</th>
+                        <th scooe="col">detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $res = json_decode($servicios, true);
+                        if (is_array($res) || is_object($res))
+                        {
+                            foreach($res as $valor){
+                                echo '<tr>';
+                                echo '<td>'.$valor['nombre'].'</td>';
+                                echo '<td>'.$valor['precio'].'</td>';
+                                echo '<td>'.$valor['descripción'].'</td>';
+                                echo '</tr>';
+                            }
+                        } 
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
