@@ -220,7 +220,7 @@ function validar_Extencion_Imagen($entrada){
 
 
 $server->register('registrar_Cliente',
-    array('nombre' => 'xsd:string', 'correo'=> 'xsd:string', 'clave'=> 'xsd:string', 'numero_Tel' => 'xsd:int'),
+    array('nombre' => 'xsd:string', 'correo'=> 'xsd:string', 'clave'=> 'xsd:string', 'numero_Tel' => 'xsd:string'),
     array('return' => 'xsd:int'),
     $miURL
 );
@@ -548,6 +548,32 @@ function activarServicio($codigo){
     }
     mysqli_Close($link);
     return new soapval('return', 'xsd:int',$estado_peticion);
+}
+
+/**
+ * SERVICIO: detalle servicio
+ * parametros: id del producto
+ */
+$server->register(
+    'detalleProductoU',
+    array('id' => 'xsd:string'),
+    array('return' => 'xsd:string'),
+    $miURL
+);
+function detalleProductoU($id){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $num = (int) $id;
+    $comprobar_Servicio =  "select * from servicio where id_Servicio = $id and estado = 'disponible'";
+    $registro = mysqli_query($link, $comprobar_Servicio);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        $res = json_encode($varRow);
+        return new soapval('return', 'xsd:string',$res);
+    }else{
+        return new soapval('return', 'xsd:string','sin datos');
+    }
+    mysqli_Close($link);
 }
 
 if(!isset($HTTP_RAW_POST_DATA)){
