@@ -381,6 +381,30 @@ function eliminar_Producto($codigo){
 }
 
 /**
+ * SERVICIO: otener todos los servicios disponibles
+ */
+$server->register(
+    'listaServicios',
+    array('user' => 'xsd:string'),
+    array('return' => 'xsd:string'),
+    $miURL
+);
+function listaServicios($user){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Servicio =  "select * from servicio where estado = 'disponible' ";
+    $registro = mysqli_query($link, $comprobar_Servicio);
+    $varRow = mysqli_fetch_array($registro);
+    $rows = array();
+    while($r = mysqli_fetch_assoc($registro)) {
+        $rows[] = $r;
+    }
+    $res = json_encode($rows);
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:string',$res);
+}
+
+/**
  * SERVICIO: verificar usuario
  * parametros: user
  * respuesta: true / false
@@ -485,29 +509,6 @@ function Admin($user){
     }
 }
 
-/**
- * SERVICIO: otener todos los servicios disponibles
- */
-$server->register(
-    'listaServicios',
-    array('servicio' => 'xsd:string'),
-    array('return' => 'xsd:string'),
-    $miURL
-);
-function listaServicios(){
-    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
-    mysqli_select_db($link,$GLOBALS['basededatos']);
-    $comprobar_Servicio =  "select * from servicio where estado = 'disponible'";
-    $registro = mysqli_query($link, $comprobar_Servicio);
-    $rows = array();
-    while($r = mysqli_fetch_assoc($registro)) {
-        $rows[] = $r;
-    }
-    $res = json_encode($rows);
-    mysqli_Close($link);
-    return new soapval('return', 'xsd:string',$res);
-}
-
 $server->register(
     'activarServicio',
     array('codigo' => 'xsd:int'),
@@ -585,9 +586,9 @@ $server->register(
 function comprobarCaptcha($response){
     $response = json_decode($response);
     if($response ->success)
-        return new soapval ('return', 'xsd:boolean',true)//verificacion exitosa
+        return new soapval ('return', 'xsd:boolean',true);//verificacion exitosa
     else
-        return new soapval ('return', 'xsd:boolean',false)//verificacion exitosa
+        return new soapval ('return', 'xsd:boolean',false);//verificacion exitosa
 }
 
 if(!isset($HTTP_RAW_POST_DATA)){
