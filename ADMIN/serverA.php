@@ -76,6 +76,7 @@
 
     /**
      * SERVICIO: editar usuario
+     * parametros: todos los datos del usuario
      */
     $server->register(
         'editarUser',
@@ -93,10 +94,35 @@
         $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
         mysqli_select_db($link,$GLOBALS['basededatos']);
         $num = (int) $id;
+        $tel = (int) $telefono;
         $editUser = "UPDATE cliente 
-                        SET nombre = '$nombre', clave = '$clave', correo = '$correo', numero_Tel = '$telefono', estado = '$estado'
+                        SET nombre = '$nombre', clave = '$clave', correo = '$correo', numero_Tel = '$tel', estado = '$estado'
                      WHERE id_Cliente = $id";
         $registro = mysqli_query($link,$editUser);
+        if($registro){
+            return new soapval('return', 'xsd:boolean', true);
+        }else{
+            return new soapval('return', 'xsd:boolean', false);
+        }
+        mysqli_Close($link);
+    }
+
+    /**
+     * SERVICIO: Eliminar usuario
+     * parametro: id
+     */
+    $server->register(
+        'eliminarUser',
+        array('id' => 'xsd:string'),
+        array('return' => 'xsd:boolean'),
+        $miURL
+    );
+    function eliminarUser($id){
+        $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+        mysqli_select_db($link,$GLOBALS['basededatos']);
+        $num = (int) $id;
+        $delUser = "DELETE FROM cliente WHERE id_Cliente = $num";
+        $registro = mysqli_query($link,$delUser);
         if($registro){
             return new soapval('return', 'xsd:boolean', true);
         }else{
