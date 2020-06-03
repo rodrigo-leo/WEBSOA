@@ -47,6 +47,64 @@
         */
     }
 
+    /**
+     * SERVICIO: Detalle de usuario
+     * parametro: Id del cliente
+     * tabla a consultar -> cliente
+     */
+    $server->register(
+        'detalleUser',
+        array('id' => 'xsd:string'),
+        array('return' => 'xsd:string'),
+        $miURL
+    );
+    function detalleUser($id){
+        $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+        mysqli_select_db($link,$GLOBALS['basededatos']);
+        $num = (int) $id;
+        $comprobar_Servicio =  "select * from cliente where id_Cliente = $id";
+        $registro = mysqli_query($link, $comprobar_Servicio);
+        $varRow = mysqli_fetch_array($registro);
+        if(is_array($varRow)){
+            $res = json_encode($varRow);
+            return new soapval('return', 'xsd:string',$res);
+        }else{
+            return new soapval('return', 'xsd:string','sin datos');
+        }
+        mysqli_Close($link);
+    }
+
+    /**
+     * SERVICIO: editar usuario
+     */
+    $server->register(
+        'editarUser',
+        array(
+            'id' => 'xsd:string',
+            'nombre' => 'xsd:string',
+            'clave' => 'xsd:string',
+            'correo' => 'xsd:string',
+            'telefono' => 'xsd:string',
+            'estado' => 'xsd:string'),
+        array('return' => 'xsd:boolean'),
+        $miURL
+    );
+    function editarUser($id, $nombre, $clave, $correo, $telefono, $estado){
+        $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+        mysqli_select_db($link,$GLOBALS['basededatos']);
+        $num = (int) $id;
+        $editUser = "UPDATE cliente 
+                        SET nombre = '$nombre', clave = '$clave', correo = '$correo', numero_Tel = '$telefono', estado = '$estado'
+                     WHERE id_Cliente = $id";
+        $registro = mysqli_query($link,$editUser);
+        if($registro){
+            return new soapval('return', 'xsd:boolean', true);
+        }else{
+            return new soapval('return', 'xsd:boolean', false);
+        }
+        mysqli_Close($link);
+    }
+
     if(!isset($HTTP_RAW_POST_DATA)){
         $HTTP_RAW_POST_DATA = file_get_contents('php://input');
     }
