@@ -25,35 +25,43 @@
         <div class="text-center">
             <h4>Lista de servicios</h4>
         </div>
-
-        <div class="row row-cols-1 row-cols-md-3">
-        <?php
-        $res = json_decode($userCatalog, true);
-            foreach($res as $val){
-        ?>
-            <div class="card border-info mb-3">
-                <div class="card">
-                    <?php
-                        $dirImagen = str_replace("C:/xampp/htdocs/dashboard/itqNet","..",$val['imagen'])
-                    ?>
-                    <img src= "<?php echo $dirImagen?>" class="card-img-top" alt="<?php echo $dirImagen?>"
-                        title="<?php echo $val['nombre']?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $val['detalles']?></h5>
-                        <p class="card-text"><?php echo $val['nombre']?></p>
-                    </div>
-                </div >
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">$<?php echo $val['precio']?></li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="btn btn-info btn-lg">Adquirir</a>
-                    <a href="#" class="btn btn-info btn-lg">Subir al carrito</a>
+        <div class="container">
+            <div class="row">
+                <div class="col">
                 </div>
-            </div>
-        <?php
-        }
-        ?>
-        </div>
+                <div class="col-9">
+                        <div class="row row-cols-1 row-cols-md-3">
+                        <?php
+                        $res = json_decode($userCatalog, true);
+                            foreach($res as $val){
+                        ?>
+                            <div class="card border-info mb-3" >
+                                <div class="card" >
+                                    <?php
+                                        $dirImagen = str_replace("C:/xampp/htdocs/dashboard/itqNet","..",$val['imagen'])
+                                    ?>
+                                    <img src= "<?php echo $dirImagen?>" class="card-img-top" alt="<?php echo $dirImagen?>"
+                                        title="<?php echo $val['nombre']?>">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $val['detalles']?></h5>
+                                        <p class="card-text"><?php echo $val['nombre']?></p>
+                                    </div>
+                                </div >
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">$<?php echo $val['precio']?></li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="#" class="btn btn-info ">Adquirir</a>
+                                    <a href="#" class="btn btn-info ">Subir al carrito</a>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        </div>
+                        
+                </div>
+                <div class="col">
+                </div>
     </body>
 </html>
