@@ -32,3 +32,7 @@
 <?php
   include "../html/footer.php";
 ?>
+
+<scritp>
+
+</script>
