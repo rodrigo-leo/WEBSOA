@@ -39,7 +39,6 @@ $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
                 </thead>
                 <tbody>
                         <?php
-                        echo $admin."<-------" ;
                             $res = json_decode($admin, true);
                             foreach($res as $val){
                                 $nombre = (String) $val['nombre'];

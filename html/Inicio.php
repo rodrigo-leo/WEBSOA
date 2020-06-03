@@ -14,12 +14,6 @@
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/Inicio.php">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/AltaProducto.html"> Subir Productos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/BajaProducto.html"> Bajar Productos</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/ListaProducto.html">Ver Productos</a>
       </li>
     </ul>

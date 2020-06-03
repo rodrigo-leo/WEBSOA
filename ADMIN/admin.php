@@ -20,10 +20,13 @@
         <a class="nav-link" href="http://localhost/dashboard/itqNet/html/ActivarProducto.html"> Activar Productos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/BajaProducto.html"> Bajar Productos</a>
+        <a class="nav-link" href="http://localhost/dashboard/itqNet/html/BajaProducto.php"> Bajar Productos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost/dashboard/itqNet/ADMIN/usuarios.php">Usuarios</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost/dashboard/itqNet/ADMIN/servicios.php">Servicios</a>
       </li>
     </ul>
   </div>
