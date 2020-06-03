@@ -576,6 +576,20 @@ function detalleProductoU($id){
     mysqli_Close($link);
 }
 
+$server->register(
+    'comprobarCaptcha',
+    array('response' => 'xsd:string'),
+    array('return' => 'xsd:boolean'),
+    $miURL
+);
+function comprobarCaptcha($response){
+    $response = json_decode($response);
+    if($response ->success)
+        return new soapval ('return', 'xsd:boolean',true)//verificacion exitosa
+    else
+        return new soapval ('return', 'xsd:boolean',false)//verificacion exitosa
+}
+
 if(!isset($HTTP_RAW_POST_DATA)){
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }

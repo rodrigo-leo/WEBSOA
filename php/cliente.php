@@ -11,13 +11,11 @@
     $pass2 = htmlentities($_POST['pass2']);
     $correo = htmlentities($_POST['correo']);
     $telefono = htmlentities($_POST['telefono']);
-    $key = "6LdOS_8UAAAAAJQCv9-rn7vsqUM4gyzmYY9_0zHW";
+    $secretKey = "6Le8tP8UAAAAAF7a8zcCBBFpnyd8Y9XCXd4MSxsU";
     $responseKey = $_POST['g-recaptcha-response'];//el valor que envia el recaptcha del formulario
     $userIP = $_SERVER['REMOTE_ADDR'];
-    $urlGoogle = "https://www.google.com/recaptcha/api/siteverify?secret=$key&response=$responseKey&remoteip=$userIP";
+    $urlGoogle = "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$responseKey&remoteip=$userIP";
     $response = file_get_contents($urlGoogle);
-
-    echo $response;
 
     static $longitud_min_contraseña = 6; //longitud mínima de caracteres que la contraseña debe de tener
     static $longitud_max_contraseña = 16; //longitud máxima de caracteres que la contraseña puede tener
@@ -26,6 +24,17 @@
     static $longitud_numero_telefonico = 10;//
     $estado_usuario = 'disponible';
 
+    $validaCaptcha = $cliente->call(
+        "comprobarCaptcha",
+        array('response' => $response),
+        "uri:$serverURL"
+    );
+    if(!$validaCaptcha){
+    $_SESSION['user'];
+    $_SESSION['correo']; 
+    $_SESSION['telefono']; 
+        header('location: http://localhost/dashboard/itqNet/html/Registro.html');
+    }
 
     $estado_Nombre_Usuario = $cliente->call(
         "comprobar_Vacio",
