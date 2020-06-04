@@ -664,6 +664,28 @@ function bajarServicio($id_User,$id_Servicio){
             }
         }
     }
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:int',-1);
+}
+
+$server->register(
+    'comprarCarrito',
+    array('id_User' => 'xsd:int', 'id_Servicio' => 'xsd:int'),
+    array('return' => 'xsd:int'),
+    $miURL
+);
+function comprarCarrito($id_User,$id_Servicio){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobarContenido = "select * from carrito where id_user = '$id_User' and id_servicio = '$id_Servicio' and estado = 'disponible'";
+    $registro = mysqli_query($link,$comprobarContenido);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+            $bajar_Del_Carrito = "UPDATE carrito SET estado = 'no disponible' WHERE id_user = '$id_User' and estado = 'disponible'";
+            if(mysqli_query($link,$bajar_Del_Carrito)){
+                return new soapval('return', 'xsd:int',1);
+        }
+    }
     return new soapval('return', 'xsd:int',-1);
 }
 
