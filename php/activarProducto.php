@@ -40,19 +40,19 @@
         $GLOBALS['estado_Peticion'] = false;
         echo '<br>Compruebe el número del codigo contenga solo digitos';
     }
-
+    
     if($estado_Peticion){
-        $producto_No_Disponible = $cliente->call(//falta eliminar
-            'eliminar_Producto',
+        $producto_No_Disponible = $cliente->call(
+            'activarServicio',
             array('codigo' => $codigo),
             "uri:$serverURL"
         );
         switch($producto_No_Disponible){
             case 1:
-                echo"El articulo $codigo ha sido retirado del inventario";
+                echo"El articulo $codigo ha sido activado en inventario";
             break;
             case -1:
-                echo"El articulo $codigo  ya se encontraba retirado del inventario";
+                echo"El articulo $codigo  ya se encontraba Activado del inventario";
             break;
             case -2:
                 echo "El articulo $codigo no se encuentra en el inventario";
