@@ -394,7 +394,6 @@ function listaServicios($user){
     mysqli_select_db($link,$GLOBALS['basededatos']);
     $comprobar_Servicio =  "select * from servicio where estado = 'disponible' ";
     $registro = mysqli_query($link, $comprobar_Servicio);
-    $varRow = mysqli_fetch_array($registro);
     $rows = array();
     while($r = mysqli_fetch_assoc($registro)) {
         $rows[] = $r;
@@ -491,7 +490,7 @@ function enviarCorreo($to, $asunto, $mensaje, $headers){
 $server->register(
     'Admin',
     array('user' => 'xsd:string'),
-    array('return' => 'xsd:boolean'),
+    array('return' => 'xsd:int'),
     $miURL
 );
 function Admin($user){
@@ -501,11 +500,7 @@ function Admin($user){
     $registro = mysqli_query($link,$comprobar_user);
     $varRow = mysqli_fetch_array($registro);
     if(is_array($varRow)){
-        if($varRow[0] == '1' || $varRow[0] == 1){
-            return new soapval('return', 'xsd:boolean',true);
-        }else{
-            return new soapval('return', 'xsd:boolean',false);
-        }
+        return new soapval('return', 'xsd:int',$varRow[0]);
     }
 }
 
@@ -589,6 +584,87 @@ function comprobarCaptcha($response){
         return new soapval ('return', 'xsd:boolean',true);//verificacion exitosa
     else
         return new soapval ('return', 'xsd:boolean',false);//verificacion exitosa
+}
+
+$server->register(
+    'agregarServicioCarrito',
+    array('user_id' => 'sxd:string', 'servicio_id' => 'xsd:string'),
+    array('return' => 'xsd:int'),
+    $miURL
+);
+function agregarServicioCarrito($user_id,$servicio_id){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Servicio_Agregado = "select id_user from carrito where id_servicio = '$servicio_id' and id_user = '$user_id' and estado = 'disponible'";
+    $registro = mysqli_query($link,$comprobar_Servicio_Agregado);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == $user_id){
+            return new soapval('return', 'xsd:int',-1);
+        }
+    }
+    $comprobar_Servicio_Retirado = "select estado from carrito";
+    $registro = mysqli_query($link,$comprobar_Servicio_Retirado);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == 'no disponible'){
+            $actualizar_Carrito = "UPDATE carrito SET estado = 'disponible' WHERE  id_servicio = '$servicio_id' and id_user = '$user_id'";
+            if(mysqli_query($link,$actualizar_Carrito)){
+                return new soapval('return', 'xsd:int',1);
+            }
+        }
+    }
+    $Subir_Al_Carrito = "insert into carrito values ('0','$user_id','$servicio_id','disponible')";
+    if(mysqli_query($link,$Subir_Al_Carrito)){
+        return new soapval('return', 'xsd:int',1);
+    }
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:int',0);
+}
+
+$server->register(
+    'listarCarrito',
+    array('id_User' => 'xsd:string'),
+    array('return' => 'xsd:string'),
+    $miURL
+);
+function listarCarrito($id_user){    
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Servicio =  
+    "select s.id_Servicio, s.codigo, s.nombre, s.precio, s.detalles, s.imagen from carrito c, servicio s where c.id_servicio = s.id_Servicio and c.estado= 'disponible'and c.id_user ='$id_user'";
+    $registro = mysqli_query($link, $comprobar_Servicio);
+    $rows = array();
+    while($r = mysqli_fetch_assoc($registro)) {
+        $rows[] = $r;
+    }
+    $res = json_encode($rows);
+    mysqli_Close($link);
+    return new soapval('return', 'xsd:string',$res);
+
+}
+
+$server->register(
+    'bajarServicio',
+    array('id_User' => 'xsd:int', 'id_Servicio' => 'xsd:int'),
+    array('return' => 'xsd:int'),
+    $miURL
+);
+function bajarServicio($id_User,$id_Servicio){
+    $link=mysqli_connect($GLOBALS['servidor'], $GLOBALS['usuario'], $GLOBALS['contraseña']);
+    mysqli_select_db($link,$GLOBALS['basededatos']);
+    $comprobar_Servicio_Cargado = "select estado from carrito where id_user = '$id_User' and id_servicio = '$id_Servicio'";
+    $registro = mysqli_query($link,$comprobar_Servicio_Cargado);
+    $varRow = mysqli_fetch_array($registro);
+    if(is_array($varRow)){
+        if($varRow[0] == 'disponible'){
+            $bajar_Del_Carrito = "UPDATE carrito SET estado = 'no disponible' WHERE  id_servicio = '$id_Servicio' and id_user = '$id_User'";
+            if(mysqli_query($link,$bajar_Del_Carrito)){
+                return new soapval('return', 'xsd:int',1);
+            }
+        }
+    }
+    return new soapval('return', 'xsd:int',-1);
 }
 
 if(!isset($HTTP_RAW_POST_DATA)){

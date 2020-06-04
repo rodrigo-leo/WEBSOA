@@ -3,6 +3,7 @@
     $serverURL = 'http://localhost/dashboard/itqNet/php/server2.php';
     $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
 
+    $id_User = $id_User;
     $userCatalog = $cliente->call(
         'listaServicios',
         array('user' => 'normal'),
@@ -30,38 +31,41 @@
                 <div class="col">
                 </div>
                 <div class="col-9">
-                        <div class="row row-cols-1 row-cols-md-3">
-                        <?php
-                        $res = json_decode($userCatalog, true);
-                            foreach($res as $val){
-                        ?>
-                            <div class="card border-info mb-3" >
-                                <div class="card" >
-                                    <?php
-                                        $dirImagen = str_replace("C:/xampp/htdocs/dashboard/itqNet","..",$val['imagen'])
-                                    ?>
-                                    <img src= "<?php echo $dirImagen?>" class="card-img-top" alt="<?php echo $dirImagen?>"
-                                        title="<?php echo $val['nombre']?>">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo $val['detalles']?></h5>
-                                        <p class="card-text"><?php echo $val['nombre']?></p>
-                                    </div>
-                                </div >
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">$<?php echo $val['precio']?></li>
-                                </ul>
+                    <div class="row row-cols-1 row-cols-md-3">
+                    <?php
+                    $res = json_decode($userCatalog, true);
+                        foreach($res as $val){
+                            $dirImagen = str_replace("C:/xampp/htdocs/dashboard/itqNet","..",$val['imagen']);
+                            $nombre = $val['nombre'];
+                            $detalles =  $val['detalles'];
+                            $id_Servicio = $val['id_Servicio'];
+                            $precio = $val['precio']
+                    ?>
+                        <div class="card border-info mb-3" >
+                            <div class="card px-md-1" >
+                                <img src= "<?php echo $dirImagen?>" class="card-img-top" alt="<?php echo $dirImagen?>"
+                                    title="<?php echo $nombre?>">
                                 <div class="card-body">
-                                    <a href="#" class="btn btn-info ">Adquirir</a>
-                                    <a href="#" class="btn btn-info ">Subir al carrito</a>
+                                    <h5 class="card-title"><?php echo $detalles?></h5>
+                                    <p class="card-text"><?php echo $nombre?></p>
                                 </div>
+                            </div >
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">$<?php echo $precio?></li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#">Adquirir</a>
+                                <a href="../php/carrito.php?id_User=<?php echo $id_User?>&id_Servicio=<?php echo $id_Servicio?>" class="btn btn-info " class="btn btn-info ">Subir al carrito</a>
                             </div>
-                        <?php
-                        }
-                        ?>
                         </div>
+                    <?php
+                    }
+                    ?>
+                    </div>
                         
                 </div>
                 <div class="col">
-                </div>
+            </div>
+        </div>
     </body>
 </html>

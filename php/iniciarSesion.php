@@ -1,8 +1,6 @@
 <?php
     require_once("../nusoap/lib/nusoap.php");
-
     $serverURL = 'http://localhost/dashboard/itqNet/php/server2.php';
-
     $cliente = new nusoap_client("$serverURL?wsdl", 'wsdl');
     $estado_formulario = true;
 
@@ -94,15 +92,15 @@
         echo "-".$registro_Cliente."-";
         switch($registro_Cliente){
             case 1:
-                $admin = $cliente->call(
+                $user = $cliente->call(
                     'Admin',
                     array('user' => $nombre_usuario),
                     "uri:$serverURL"
                 );
-                if($admin == true){
+                if($user == 1 || $user == '1'){
                     header('location: http://localhost/dashboard/itqNet/ADMIN/admin.php');
                 }else{
-                    header('location: http://localhost/dashboard/itqNet/html/Inicio.php');
+                    header("location: http://localhost/dashboard/itqNet/html/Inicio.php?id_User=$user");
                 }
             break;
             case -1:
