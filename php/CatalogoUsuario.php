@@ -54,7 +54,6 @@
                                 <li class="list-group-item">$<?php echo $precio?></li>
                             </ul>
                             <div class="card-body">
-                                <a href="#">Adquirir</a>
                                 <a href="../php/carrito.php?id_User=<?php echo $id_User?>&id_Servicio=<?php echo $id_Servicio?>" class="btn btn-info " class="btn btn-info ">Subir al carrito</a>
                             </div>
                         </div>

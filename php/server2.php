@@ -603,20 +603,20 @@ function agregarServicioCarrito($user_id,$servicio_id){
             return new soapval('return', 'xsd:int',-1);
         }
     }
-    $comprobar_Servicio_Retirado = "select estado from carrito";
+    $comprobar_Servicio_Retirado = "select estado from carrito where id_user = '$user_id' and id_servicio = '$servicio_id'";
     $registro = mysqli_query($link,$comprobar_Servicio_Retirado);
     $varRow = mysqli_fetch_array($registro);
     if(is_array($varRow)){
         if($varRow[0] == 'no disponible'){
             $actualizar_Carrito = "UPDATE carrito SET estado = 'disponible' WHERE  id_servicio = '$servicio_id' and id_user = '$user_id'";
             if(mysqli_query($link,$actualizar_Carrito)){
-                return new soapval('return', 'xsd:int',1);
+                return new soapval('return', 'xsd:int',1);//se actualiza el registro del servicio al cliente
             }
         }
     }
     $Subir_Al_Carrito = "insert into carrito values ('0','$user_id','$servicio_id','disponible')";
     if(mysqli_query($link,$Subir_Al_Carrito)){
-        return new soapval('return', 'xsd:int',1);
+        return new soapval('return', 'xsd:int',2);//se crea el nuevo registro al cliente
     }
     mysqli_Close($link);
     return new soapval('return', 'xsd:int',0);
